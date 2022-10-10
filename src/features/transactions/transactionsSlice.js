@@ -8,16 +8,14 @@ const transactionsSlice = createSlice({
   initialState: initialState,
   reducers: {
     addTransaction: (state, action) => {
-      state[action.payload.category].push(action.payload);
-      return state;
+      state[action.payload.category].push(action.payload)
     },
-
     deleteTransaction: (state, action) => {
-      state[action.payload.category].filter(transaction => transaction.id !== action.payload.id);
-      return state;
+      const index = state[action.payload.category].findIndex(tx => tx.id === action.payload.id);
+      state[action.payload.category].splice(index, 1);
     }
   }
-});
+})
 
 export const selectTransactions = (state) => state.transactions;
 export const selectFlattenedTransactions = (state) => Object.values(state.transactions).reduce((a,b) => [...a, ...b], []);
